@@ -1,22 +1,48 @@
-/* --- Reset Básico e Estilos Gerais --- */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
-    line-height: 1.6;
+:root {
+    --color-primary: #003b6f;
+    --color-secondary: #13ce66;
+    --color-bg: #f4f7f6;
+    --text: #333;
+    --font: 'Inter', sans-serif;
+}
+
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font);
+    background-color: var(--color-bg);
+    color: var(--text);
+    line-height: 1.6;
     padding: 0 20px;
 }
 
-header {
-    max-width: 800px;
-    margin: 40px auto;
+.hero {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: #fff;
     text-align: center;
+    padding: 80px 20px;
+    clip-path: polygon(0 0,100% 0,100% 85%,0 100%);
+    margin-bottom: 40px;
 }
 
-h1 {
-    color: #111;
-    margin-bottom: 0;
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.hero span.highlight {
+    background: rgba(255,255,255,0.15);
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
 }
 
 h2 {
@@ -28,77 +54,189 @@ h2 {
 
 main {
     max-width: 100%;
-    margin: 40px auto;
+    margin: 0 auto 40px;
 }
 
-/* --- O Container da Timeline Horizontal --- */
+/* Two-column layout for certifications and timeline */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .timeline-container {
-    display: flex; /* A magia para o layout horizontal */
-    overflow-x: auto; /* Permite rolar horizontalmente */
-    overflow-y: hidden;
-    padding: 30px 20px;
-    
-    /* Melhora a "sensação" do scroll em alguns navegadores */
-    -webkit-overflow-scrolling: touch; 
+    position: relative;
+    display: flex;
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
-    
-    /* Adiciona um espaço entre os blocos */
-    gap: 25px; 
+    gap: 25px;
+    padding: 30px 20px;
 }
 
-/* --- Os Blocos Horizontais --- */
+.timeline-container::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
 .timeline-block {
-    /* Cada bloco terá no mínimo 350px de largura, mas pode crescer */
+    position: relative;
+    z-index: 1;
     flex: 0 0 350px;
-    background-color: #ffffff;
+    background: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    scroll-snap-align: start; /* "Trava" o scroll no início do bloco */
-
-    /* --- A ANIMAÇÃO --- */
-    opacity: 0; /* Começa invisível */
-    transform: translateY(40px); /* Começa 40px abaixo */
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* A mágica da transição */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    scroll-snap-align: start;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, transform 0.3s ease-in-out;
 }
 
-/* --- Estado Visível da Animação --- */
 .timeline-block.is-visible {
-    opacity: 1; /* Fica visível */
-    transform: translateY(0); /* Volta à posição original */
+    opacity: 1;
+    transform: translateY(0);
 }
 
+.timeline-block:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
 
-/* --- Estilos internos dos blocos --- */
 .timeline-block .date {
     font-size: 0.85rem;
     color: #666;
-    font-weight: 500;
-    display: block;
     margin-bottom: 5px;
 }
 
 .timeline-block h3 {
-    margin: 0 0 5px 0;
-    color: #0056b3; /* Um azul para destacar */
+    margin: 0 0 5px;
+    color: var(--color-primary);
 }
 
 .timeline-block .company {
     font-size: 1rem;
     font-weight: 600;
     color: #444;
-    display: block;
     margin-bottom: 15px;
+    display: block;
 }
 
 .timeline-block ul {
     padding-left: 20px;
-    margin: 0;
 }
 
 .timeline-block li {
     font-size: 0.95rem;
     color: #555;
     margin-bottom: 8px;
+}
+
+span.highlight {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: #fff;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.timeline-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.timeline-container::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+.timeline-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.certifications {
+    background: #fff;
+    padding: 40px 20px;
+    border-radius: 8px;
+    margin: 40px auto;
+    max-width: 900px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+.certifications h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.certification-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+.certification-logos img {
+    width: 120px;
+    height: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.3s ease;
+    border-radius: 4px;
+}
+
+.certification-logos img:hover {
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+/* Tooltip for specialist certification */
+.cert-logo {
+  position: relative;
+}
+
+.cert-logo .tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 10px;
+  margin-top: 8px;
+  z-index: 10;
+}
+
+.cert-logo:hover .tooltip {
+  display: block;
+}
+
+.cert-logo .tooltip ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cert-logo .tooltip li {
+  font-size: 0.85rem;
+  margin: 4px 0;
+  color: #333;
 }
