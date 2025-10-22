@@ -1,5 +1,45 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Menu de navegação
+    const menuButtons = document.querySelectorAll('.menu-btn');
+    const sections = {
+        certifications: document.getElementById('certifications'),
+        experience: document.getElementById('experience'),
+        skills: document.getElementById('skills')
+    };
+
+    menuButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active de todos os botões
+            menuButtons.forEach(btn => {
+                btn.classList.remove('active', 'bg-white/25', 'border-white', 'shadow-lg');
+                btn.classList.add('bg-white/10', 'border-white/30');
+            });
+
+            // Adiciona active ao botão clicado
+            this.classList.add('active', 'bg-white/25', 'border-white', 'shadow-lg', 'shadow-white/20');
+            this.classList.remove('bg-white/10', 'border-white/30');
+
+            // Oculta todas as seções
+            Object.values(sections).forEach(section => {
+                if (section) {
+                    section.classList.add('hidden');
+                    section.classList.remove('animate-fade-in');
+                }
+            });
+
+            // Mostra a seção correspondente com animação
+            const sectionId = this.getAttribute('data-section');
+            if (sections[sectionId]) {
+                sections[sectionId].classList.remove('hidden');
+                // Adiciona animação de entrada
+                setTimeout(() => {
+                    sections[sectionId].classList.add('animate-fade-in');
+                }, 10);
+            }
+        });
+    });
+
     // Seleciona todos os blocos que queremos animar
     const timelineBlocks = document.querySelectorAll(".timeline-block");
 
