@@ -38,9 +38,31 @@ html {
     }
 }
 
+body {
+    font-size: 0.95rem;
+}
+
 header {
     background-size: 200% 200%;
     animation: gradient-shift 15s ease infinite;
+}
+
+/* Language selector styles */
+.lang-btn {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: white !important;
+    transform: scale(1.05);
+}
+
+.lang-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 .menu-btn {
@@ -221,8 +243,8 @@ span.highlight {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 30px;
-    padding: 20px;
+    gap: 10px;
+    padding: 10px;
 }
 
 .certification-logos img {
